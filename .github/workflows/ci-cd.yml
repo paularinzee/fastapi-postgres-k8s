@@ -67,6 +67,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build & push Docker image
         run: |
-          IMAGE=${{ secrets.DOCKERHUB_USERNAME }}/fastapi-app:${{ github.sha }}
+          IMAGE=${{ secrets.DOCKER_USERNAME }}/fastapi-app:${{ github.sha }}
           docker build -t $IMAGE .
           docker push $IMAGE

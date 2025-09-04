@@ -45,6 +45,7 @@ jobs:
       - name: Run tests
         env:
           DATABASE_URL: postgresql+psycopg2://testuser:testpass@localhost:5432/testdb
+          PYTHONPATH: ${{ github.workspace }}    # 👈 fix imports
         run: pytest -v
 
 
@@ -68,8 +69,6 @@ jobs:
 
       - name: Build & push Docker image
         run: |
-          IMAGE=ghcr.io/${{ github.repository_owner }}/fastapi-app:latest
+          IMAGE=ghcr.io/${{ github.repository_owner }}/fastapi-app:${{ github.sha }}
           docker build -t $IMAGE .
           docker push $IMAGE
-
-      

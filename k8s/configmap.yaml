@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fastapi-config
+  namespace: fastapi-store
+data:
+  PORT: "8080"
+  DATABASE_URL: "postgresql+psycopg2://fastuser:fastpass@postgres:5432/fastdb"

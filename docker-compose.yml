@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:14
+    container_name: store-db
+    restart: always
+    environment:
+      POSTGRES_USER: paularinze
+      POSTGRES_PASSWORD: 19925809
+      POSTGRES_DB: store
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: store-api
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - .env  
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://paularinze:19925809@db:5432/store
+      PORT: 8080
+    command: >
+      sh -c "uvicorn api.main:app --host 0.0.0.0 --port 8080"
+
+volumes:
+  postgres_data:
